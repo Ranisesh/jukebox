@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🎵 My Music Jukebox</title>
+  <style>
+    body {
+      background: #fff8f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #d63384;
+    }
+    .song-button {
+      background: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .song-button:hover {
+      background: #45a049;
+    }
+    audio {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎵 My Music Jukebox</h1>
+<p>Click a song to play:</p>
+
+<!-- Song buttons -->
+<button class="song-button" onclick="playSong('songs/lag_ja_gale.mp3')">Lag Ja Gale</button><br>
+<button class="song-button" onclick="playSong('songs/jana_gana_mana.mp3')">Jana Gana Mana</button><br>
+<button class="song-button" onclick="playSong('songs/krishna_bhajan.mp3')">Krishna Bhajan</button><br>
+
+<audio id="audioPlayer" controls autoplay></audio>
+
+<script>
+function playSong(file) {
+  var player = document.getElementById('audioPlayer');
+  player.src = file;
+  player.play();
+}
+</script>
+
+</body>
+</html>
