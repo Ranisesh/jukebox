@@ -32,99 +32,49 @@
       width: 100%;
       max-width: 400px;
     }
-    #fileInput {
+    input[type="file"] {
       margin-top: 20px;
-    }
-    #currentSong {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #333;
-    }
-    .controls {
-      margin-top: 20px;
-    }
-    .control-button {
-      background-color: #ff5722;
-      color: white;
-      padding: 10px 20px;
-      margin: 10px;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .control-button:hover {
-      background-color: #f44336;
     }
   </style>
 </head>
 <body>
 
 <h1>🎵 My Music Jukebox</h1>
-<p>Click a song to play:</p>
+<p>Click a song to play or upload your own MP3 file:</p>
 
 <!-- Song buttons -->
-<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', 'Hare Krishna Mantra')">Hare Krishna Mantra</button>
-<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', 'Govindam Adi Purusham')">Govindam Adi Purusham</button>
-<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', 'Jai Radha Madhava')">Jai Radha Madhava</button>
-<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', 'Bhaja Hare Krishna')">Bhaja Hare Krishna</button>
-<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', 'Hare Krishna, Hare Krishna')">Hare Krishna, Hare Krishna</button>
-<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3', 'Om Namo Bhagavate Vasudevaya')">Om Namo Bhagavate Vasudevaya</button>
-<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3', 'Hare Rama Hare Rama')">Hare Rama Hare Rama</button>
+<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3')">Hare Krishna Mantra</button>
+<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3')">Govindam Adi Purusham</button>
+<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3')">Jai Radha Madhava</button>
+<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3')">Bhaja Hare Krishna</button>
+<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3')">Hare Krishna, Hare Krishna</button>
+<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3')">Om Namo Bhagavate Vasudevaya</button>
+<button class="song-button" onclick="playSong('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3')">Hare Rama Hare Rama</button>
 
-<!-- File input to choose an MP3 -->
-<input type="file" id="fileInput" accept="audio/mp3" onchange="loadFile(event)" />
+<!-- File Upload -->
+<input type="file" id="fileInput" accept="audio/mp3" onchange="loadFile(event)">
 
-<!-- Audio Player -->
 <audio id="audioPlayer" controls autoplay></audio>
 
-<!-- Current song name display -->
-<p id="currentSong">No song is playing</p>
-
-<!-- Stop Button -->
-<div class="controls">
-  <button class="control-button" onclick="stopSong()">Stop</button>
-</div>
-
 <script>
-// Play a selected song and update UI
-function playSong(file, songName) {
-  var player = document.getElementById('audioPlayer');
-  player.src = file;
-  player.play();
-  
-  // Update current song display
-  document.getElementById('currentSong').innerHTML = "Now playing: " + songName;
-}
-
-// Stop the song
-function stopSong() {
-  var player = document.getElementById('audioPlayer');
-  player.pause();
-  player.currentTime = 0;  // Reset to the beginning of the song
-  document.getElementById('currentSong').innerHTML = "No song is playing";
-}
-
-// Handle file input and play the selected file
-function loadFile(event) {
-  var player = document.getElementById('audioPlayer');
-  var file = event.target.files[0];
-  
-  // Check if the file is an MP3
-  if (file && file.type === "audio/mp3") {
-    var reader = new FileReader();
-    
-    // Read the file as a data URL
-    reader.onload = function(e) {
-      player.src = e.target.result;
-      player.play();
-      document.getElementById('currentSong').innerHTML = "Now playing: " + file.name;
-    }
-    
-    reader.readAsDataURL(file);
-  } else {
-    alert("Please select a valid MP3 file.");
+  function playSong(file) {
+    var player = document.getElementById('audioPlayer');
+    player.src = file;
+    player.play();
   }
-}
+
+  function loadFile(event) {
+    var player = document.getElementById('audioPlayer');
+    var file = event.target.files[0];
+    
+    if (file && file.type === "audio/mp3") {
+      var objectURL = URL.createObjectURL(file);
+      player.src = objectURL;
+      player.play();
+    } else {
+      alert("Please upload a valid MP3 file.");
+    }
+  }
 </script>
 
 </body>
